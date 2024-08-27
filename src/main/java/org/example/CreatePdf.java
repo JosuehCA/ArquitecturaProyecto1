@@ -1,15 +1,22 @@
 package org.example;
 
+import java.io.File;
 import java.io.IOException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
 public class CreatePdf {
-    public static void main(String args[]) throws IOException
-    {
-        PDDocument document = new PDDocument();
+
+    private PDDocument document;
+
+    public CreatePdf() {
+        document = new PDDocument();
+    }
+
+    // agregar página al PDF
+    public void addPage(String content) throws IOException {
         PDPage page = new PDPage();
         document.addPage(page);
 
@@ -17,15 +24,37 @@ public class CreatePdf {
 
         contentStream.beginText();
 
-        contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-        contentStream.newLineAtOffset(25, 500);
+        File fontFile = new File("C:/Users/LENOVO/Downloads/Respaldo/OneDrive/Escritorio/Documentos/ArquiPruebas/ArquitecturaProyecto1-main/src/main/resources/arial.ttf");
+        PDType0Font font = PDType0Font.load(document, fontFile);
 
-        contentStream.showText("Texto de prueba");
+        contentStream.setFont(font, 12);
+        contentStream.newLineAtOffset(25, 700);
+
+        //filtra caracteres invisibles
+        content = removeInvisibleChars(content);
+
+
+        String[] lines = content.split("\n");
+
+        for (String line : lines) {
+            contentStream.showText(line.trim());
+            contentStream.newLineAtOffset(0, -15);
+        }
+
         contentStream.endText();
         contentStream.close();
+    }
 
-        document.save("src/main/resources/sample.pdf");
-        System.out.println("PDF created");
+    //guardar el PDF
+    public void savePdf(String outputPath) throws IOException {
+        document.save(outputPath);
+        System.out.println("PDF created at: " + outputPath);
         document.close();
     }
+
+    //eliminar caracteres de control menos '\n'
+    private String removeInvisibleChars(String content) {
+        return content.replaceAll("[\\p{C}&&[^\\n]]", "");
+    }
 }
+

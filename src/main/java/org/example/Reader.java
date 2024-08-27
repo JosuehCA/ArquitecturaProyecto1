@@ -1,3 +1,5 @@
+package org.example;
+
 import com.opencsv.CSVReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,14 +10,27 @@ public class Reader {
         String archivo = path;
         CSVReader csvReader = new CSVReader(new FileReader(archivo));
         String[] fila = null;
-        while((fila = csvReader.readNext()) != null) {}
-        int registros = (int)csvReader.getLinesRead();
+
+        // lista para filas no vacías
+        int registros = 0;
+        while ((fila = csvReader.readNext()) != null) {
+            // saltar filas vacías
+            if (fila.length == 0 || (fila.length == 1 && fila[0].trim().isEmpty())) {
+                continue;
+            }
+            registros++;
+        }
         csvReader.close();
+
         String[][] arreglo = new String[registros][2];
         csvReader = new CSVReader(new FileReader(archivo));
         int i = 0;
-        while((fila = csvReader.readNext()) != null) {
-            for(int j = 0; j<2; j++) {
+        while ((fila = csvReader.readNext()) != null) {
+            // saltar filas vacías
+            if (fila.length == 0 || (fila.length == 1 && fila[0].trim().isEmpty())) {
+                continue;
+            }
+            for (int j = 0; j < 2; j++) {
                 arreglo[i][j] = fila[j];
             }
             i++;
@@ -35,7 +50,8 @@ public class Reader {
     }
 
     public static void main(String[] args) throws IOException {
-        String[][] arregloleido = leerArchivo("src/main/resources/elementos.csv");
+        //String[][] arregloleido = leerArchivo("src/main/resources/elementos.csv");
+        String[][] arregloleido = leerArchivo("C:/Users/LENOVO/Downloads/Respaldo/OneDrive/Escritorio/Documentos/ArquiPruebas/ArquitecturaProyecto1-main/src/main/resources/elementos.csv");
         leerMatriz(arregloleido);
     }
 }
