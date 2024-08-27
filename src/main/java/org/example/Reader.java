@@ -51,7 +51,7 @@ public class Reader {
 
     public static void main(String[] args) throws IOException {
         //String[][] arregloleido = leerArchivo("src/main/resources/elementos.csv");
-        String[][] arregloleido = leerArchivo("C:/Users/LENOVO/Downloads/Respaldo/OneDrive/Escritorio/Documentos/ArquiPruebas/ArquitecturaProyecto1-main/src/main/resources/elementos.csv");
+        String[][] arregloleido = leerArchivo("src/main/resources/elementos.csv");
         leerMatriz(arregloleido);
     }
 }

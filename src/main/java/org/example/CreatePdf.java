@@ -24,7 +24,7 @@ public class CreatePdf {
 
         contentStream.beginText();
 
-        File fontFile = new File("C:/Users/LENOVO/Downloads/Respaldo/OneDrive/Escritorio/Documentos/ArquiPruebas/ArquitecturaProyecto1-main/src/main/resources/arial.ttf");
+        File fontFile = new File("src/main/resources/arial.ttf");
         PDType0Font font = PDType0Font.load(document, fontFile);
 
         contentStream.setFont(font, 12);

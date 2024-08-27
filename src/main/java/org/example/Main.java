@@ -8,8 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            String templatePath = "C:/Users/LENOVO/Downloads/Respaldo/OneDrive/Escritorio/Documentos/ArquiPruebas/ArquitecturaProyecto1-main/src/main/resources/template.txt";
-            String csvPath = "C:/Users/LENOVO/Downloads/Respaldo/OneDrive/Escritorio/Documentos/ArquiPruebas/ArquitecturaProyecto1-main/src/main/resources/elementos.csv";
+            String templatePath = "src/main/resources/template.txt";
+            String csvPath = "src/main/resources/elementos.csv";
 
             TemplateProcessor templateProcessor = new TemplateProcessor();
             templateProcessor.loadTemplate(templatePath);
@@ -41,7 +41,7 @@ public class Main {
             }
 
             // guardar el PDF con todas las páginas agregadas
-            String outputPath = "C:/Users/LENOVO/Downloads/Respaldo/OneDrive/Escritorio/Documentos/ArquiPruebas/ArquitecturaProyecto1-main/src/main/resources/prueba.pdf";
+            String outputPath = "src/main/resources/prueba.pdf";
             pdfCreator.savePdf(outputPath);
 
             //manejo de excepciones
