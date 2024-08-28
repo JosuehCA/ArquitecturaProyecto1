@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.example.Reader.validateCSV;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -51,36 +53,6 @@ public class Main {
             System.err.println("Error: " + e.getMessage());
         } catch (CSVNoDataException e) {
             System.err.println("Error: " + e.getMessage());
-        }
-    }
-
-    // validar que el CSV tiene encabezados y fila de datos
-    private static void validateCSV(String[][] csvData) throws CSVHeaderMissingException, CSVNoDataException {
-        if (csvData.length == 0) {
-            throw new CSVHeaderMissingException("El archivo CSV está vacío.");
-        }
-
-        String[] headers = csvData[0];
-        boolean hasDestinatario = false;
-        boolean hasRemitente = false;
-
-        // verificar que existan los encabezados
-        for (String header : headers) {
-            if (header.equalsIgnoreCase("destinatario")) {
-                hasDestinatario = true;
-            }
-            if (header.equalsIgnoreCase("remitente")) {
-                hasRemitente = true;
-            }
-        }
-
-        if (!hasDestinatario || !hasRemitente) {
-            throw new CSVHeaderMissingException("El archivo CSV debe contener los encabezados (destinatario/remitente)");
-        }
-
-        // verificar quue tenga más filas además de los encabezados
-        if (csvData.length == 1) {
-            throw new CSVNoDataException("El archivo CSV solo contiene los encabezados");
         }
     }
 }

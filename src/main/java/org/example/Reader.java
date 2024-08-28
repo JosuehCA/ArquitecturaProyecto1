@@ -39,19 +39,33 @@ public class Reader {
         return arreglo;
     }
 
-    public static void leerMatriz(String[][] arreglo) {
-        for (int i = 0; i < arreglo.length; i++) {
-            System.out.println("");
-            System.out.println("Registro " + (i+1) + "\n");
-            for (int j = 0; j < arreglo[i].length; j++) {
-                System.out.println(arreglo[i][j]);;
+    // validar que el CSV tiene encabezados y fila de datos
+    public static void validateCSV(String[][] csvData) throws CSVHeaderMissingException, CSVNoDataException {
+        if (csvData.length == 0) {
+            throw new CSVHeaderMissingException("El archivo CSV está vacío.");
+        }
+
+        String[] headers = csvData[0];
+        boolean hasDestinatario = false;
+        boolean hasRemitente = false;
+
+        // verificar que existan los encabezados
+        for (String header : headers) {
+            if (header.equalsIgnoreCase("destinatario")) {
+                hasDestinatario = true;
+            }
+            if (header.equalsIgnoreCase("remitente")) {
+                hasRemitente = true;
             }
         }
-    }
 
-    public static void main(String[] args) throws IOException {
-        //String[][] arregloleido = leerArchivo("src/main/resources/elementos.csv");
-        String[][] arregloleido = leerArchivo("src/main/resources/elementos.csv");
-        leerMatriz(arregloleido);
+        if (!hasDestinatario || !hasRemitente) {
+            throw new CSVHeaderMissingException("El archivo CSV debe contener los encabezados (destinatario/remitente)");
+        }
+
+        // verificar quue tenga más filas además de los encabezados
+        if (csvData.length == 1) {
+            throw new CSVNoDataException("El archivo CSV solo contiene los encabezados");
+        }
     }
 }
