@@ -17,7 +17,7 @@ public class TemplateProcessor {
         templateContent = new String(Files.readAllBytes(Paths.get(filePath)), "UTF-8");
     }
 
-    public void detectIdentifiers() {
+    public void detectIdentifiers() throws CSVExceptions {
         Pattern pattern = Pattern.compile("<\\s*[a-zA-Z0-9_]+\\s*>");
         Matcher matcher = pattern.matcher(templateContent);
 
@@ -30,8 +30,7 @@ public class TemplateProcessor {
         }
 
         if(identifiers.isEmpty()) {
-            System.out.println("No identifiers found in template");
-            System.exit(0);
+            throw new CSVExceptions("No se encontraron identificadores en el template");
         }
     }
 

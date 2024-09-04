@@ -3,8 +3,7 @@ package org.example;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.example.CSVExceptions.CSVNoDataException;
-import org.example.CSVExceptions.CSVHeaderMissingException;
+
 
 import static org.example.Reader.validateCSV;
 
@@ -55,10 +54,8 @@ public class Main {
             //manejo de excepciones
         } catch (IOException e) {
             System.err.println("Error al leer archivos: " + e.getMessage());
-        } catch (CSVHeaderMissingException e) {
-            System.err.println("Error: " + e.getMessage());
-        } catch (CSVNoDataException e) {
-            System.err.println("Error: " + e.getMessage());
+        } catch (CSVExceptions e) {
+            throw new RuntimeException(e);
         }
     }
 }
