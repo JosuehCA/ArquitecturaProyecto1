@@ -3,6 +3,8 @@ package org.example;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.example.CSVExceptions.CSVNoDataException;
+import org.example.CSVExceptions.CSVHeaderMissingException;
 
 import static org.example.Reader.validateCSV;
 

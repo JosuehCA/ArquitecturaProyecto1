@@ -56,5 +56,6 @@ public class CreatePdf {
     private String removeInvisibleChars(String content) {
         return content.replaceAll("[\\p{C}&&[^\\n]]", "");
     }
+
 }
 

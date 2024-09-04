@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TemplateProcessor {
 
@@ -17,9 +19,17 @@ public class TemplateProcessor {
     public String replaceIdentifiers(Map<String, String> replacements) {
         String processedContent = templateContent;
 
-        // Reemplazar cada identificador con valores del CSV
+        // reemplazar cada identificador con valores del CSV /ignora espacios en blanco
         for (Map.Entry<String, String> entry : replacements.entrySet()) {
-            processedContent = processedContent.replace("<" + entry.getKey() + ">", entry.getValue());
+            String identifier = entry.getKey();
+            String value = entry.getValue();
+
+            //identificadores que pueden tener espacios en blanco
+            String regex = "<\\s*" + Pattern.quote(identifier) + "\\s*>";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(processedContent);
+            //reemplaza lo que coincida con el patrón
+            processedContent = matcher.replaceAll(value);
         }
 
         return processedContent;

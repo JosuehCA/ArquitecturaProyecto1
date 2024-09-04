@@ -1,10 +1,11 @@
 package org.example;
 
 import com.opencsv.CSVReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
+import org.example.CSVExceptions.CSVHeaderMissingException;
+import org.example.CSVExceptions.CSVNoDataException;
+
 public class Reader {
     public static String[][] leerArchivo(String path) throws IOException {
         String archivo = path;
