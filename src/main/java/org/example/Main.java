@@ -27,6 +27,9 @@ public class Main {
             // instancia de CreatePdf
             CreatePdf pdfCreator = new CreatePdf();
 
+            // Detectar identificadores en el template
+            templateProcessor.detectIdentifiers();
+
             // procesa cada fila del CSV y agrega una página al PDF
             for (int i = 1; i < csvData.length; i++) {  // se omiten encabezados
                 Map<String, String> replacements = new HashMap<>();
@@ -36,6 +39,7 @@ public class Main {
                     String identifier = csvData[0][j]; // identifica si es destinatario/remitente
                     replacements.put(identifier, csvData[i][j]);  //reemplazo (clave/valor)
                 }
+
 
                 // reemplazar identificadores en el template
                 String processedContent = templateProcessor.replaceIdentifiers(replacements);
