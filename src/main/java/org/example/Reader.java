@@ -3,34 +3,46 @@ package org.example;
 import com.opencsv.CSVReader;
 import java.io.FileReader;
 import java.io.IOException;
+import org.example.CSVExceptions;
+import org.example.CSVExceptions;
 
 public class Reader {
-    public static String[][] leerArchivo(String path) throws IOException {
+    public static String[][] leerArchivo(String path) throws IOException, CSVExceptions {
         String archivo = path;
         CSVReader csvReader = new CSVReader(new FileReader(archivo));
         String[] fila = null;
+        boolean hasEmptyLines = false;
+        int dataLines = 0;
 
-        // lista para filas no vacías
-        int registros = 0;
+        // contar líneas y verificar si hay líneas vacías
         while ((fila = csvReader.readNext()) != null) {
-            // saltar filas vacías
-            if (fila.length == 0 || (fila.length == 1 && fila[0].trim().isEmpty())) {
-                continue;
+            if (isEmptyRow(fila)) {
+                hasEmptyLines = true;
+            } else {
+                dataLines++;
             }
-            registros++;
         }
         csvReader.close();
 
-        String[][] arreglo = new String[registros][2];
+        //si esta vacío
+        if (dataLines == 0) {
+            throw new CSVExceptions("El archivo CSV está vacío.");
+        }
+
+        //si hay líneas vacías
+        if (hasEmptyLines) {
+            throw new CSVExceptions("El archivo CSV contiene filas vacías.");
+        }
+
+
+        String[][] arreglo = new String[dataLines][2];
         csvReader = new CSVReader(new FileReader(archivo));
         int i = 0;
         while ((fila = csvReader.readNext()) != null) {
-            // saltar filas vacías
-            if (fila.length == 0 || (fila.length == 1 && fila[0].trim().isEmpty())) {
-                continue;
-            }
             for (int j = 0; j < 2; j++) {
-                arreglo[i][j] = fila[j];
+                if (j < fila.length) {
+                    arreglo[i][j] = fila[j];
+                }
             }
             i++;
         }
@@ -38,11 +50,21 @@ public class Reader {
         return arreglo;
     }
 
+    // verificar si una fila está vacía
+    private static boolean isEmptyRow(String[] fila) {
+        if (fila == null) {
+            return true;
+        }
+        for (String item : fila) {
+            if (item != null && !item.trim().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // validar que el CSV tiene encabezados y fila de datos
     public static void validateCSV(String[][] csvData) throws CSVExceptions {
-        if (csvData.length == 0) {
-            throw new CSVExceptions("El archivo CSV está vacío.");
-        }
 
         String[] headers = csvData[0];
         boolean hasDestinatario = false;
