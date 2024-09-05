@@ -16,7 +16,7 @@ public class TemplateProcessor {
 
     public void loadTemplate(String filePath) throws IOException, MultipleBracketsException {
         templateContent = new String(Files.readAllBytes(Paths.get(filePath)), "UTF-8");
-        System.out.println(templateContent);
+        //System.out.println(templateContent);
         validateTemplate(templateContent);
     }
 
