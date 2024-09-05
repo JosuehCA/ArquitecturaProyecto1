@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.example.TemplateExceptions.MultipleBracketsException;
 
 public class TemplateProcessor {
 
     private String templateContent;
     private ArrayList<String> identifiers =  new ArrayList<String>();
 
-    public void loadTemplate(String filePath) throws IOException {
+    public void loadTemplate(String filePath) throws IOException, MultipleBracketsException {
         templateContent = new String(Files.readAllBytes(Paths.get(filePath)), "UTF-8");
+        System.out.println(templateContent);
+        validateTemplate(templateContent);
     }
 
     public void detectIdentifiers() throws CSVExceptions {
@@ -38,6 +41,17 @@ public class TemplateProcessor {
         }
     }
 
+    // validar contenido de template
+    private void validateTemplate(String content) throws TemplateExceptions.MultipleBracketsException {
+        // encuentra identificadores con múltiples < >
+        Pattern multipleBracketsPattern = Pattern.compile("<{2,}|>{2,}");
+        Matcher multipleBracketsMatcher = multipleBracketsPattern.matcher(content);
+
+        // si hay identificador con varios < >
+        if (multipleBracketsMatcher.find()) {
+            throw new TemplateExceptions.MultipleBracketsException("El template contiene múltiples (< / >)");
+        }
+    }
 
     // reemplazar los identificadores en el template
     public String replaceIdentifiers(Map<String, String> replacements) {
@@ -59,4 +73,3 @@ public class TemplateProcessor {
         return processedContent;
     }
 }
-

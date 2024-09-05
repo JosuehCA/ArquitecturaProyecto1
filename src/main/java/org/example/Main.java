@@ -3,8 +3,7 @@ package org.example;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-
+import org.example.TemplateExceptions.MultipleBracketsException;
 import static org.example.Reader.validateCSV;
 
 public class Main {
@@ -39,7 +38,6 @@ public class Main {
                     replacements.put(identifier, csvData[i][j]);  //reemplazo (clave/valor)
                 }
 
-
                 // reemplazar identificadores en el template
                 String processedContent = templateProcessor.replaceIdentifiers(replacements);
 
@@ -54,6 +52,8 @@ public class Main {
             //manejo de excepciones
         } catch (IOException e) {
             System.err.println("Error al leer archivos: " + e.getMessage());
+        } catch (MultipleBracketsException e){
+            System.err.println("Error: " + e.getMessage());
         } catch (CSVExceptions e) {
             throw new RuntimeException(e);
         }
