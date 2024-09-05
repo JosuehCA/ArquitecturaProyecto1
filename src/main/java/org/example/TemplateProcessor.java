@@ -18,19 +18,23 @@ public class TemplateProcessor {
     }
 
     public void detectIdentifiers() throws CSVExceptions {
-        Pattern pattern = Pattern.compile("<\\s*[a-zA-Z0-9_]+\\s*>");
+        Pattern pattern = Pattern.compile("(?<!<)<\\s*[a-zA-Z0-9_]+\\s*>(?!>)");
         Matcher matcher = pattern.matcher(templateContent);
 
         while(matcher.find()) {
-            identifiers.add(matcher.group());
+            String token = matcher.group();
+            token = token.substring(1, token.length()-1).trim();
+
+            identifiers.add(token);
         }
+
 
         for(String token : identifiers) {
             System.out.println("Token: " + token + '\n');
         }
 
-        if(identifiers.isEmpty()) {
-            throw new CSVExceptions("No se encontraron identificadores en el template");
+        if(identifiers.isEmpty() || identifiers.size() == 1) {
+            throw new CSVExceptions("No se encontraron identificadores suficientes en el template");
         }
     }
 
