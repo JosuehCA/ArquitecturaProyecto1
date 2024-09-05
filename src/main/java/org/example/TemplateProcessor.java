@@ -7,14 +7,13 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.example.TemplateExceptions.MultipleBracketsException;
 
 public class TemplateProcessor {
 
     private String templateContent;
     private ArrayList<String> identifiers =  new ArrayList<String>();
 
-    public void loadTemplate(String filePath) throws IOException, MultipleBracketsException {
+    public void loadTemplate(String filePath) throws IOException, TemplateExceptions {
         templateContent = new String(Files.readAllBytes(Paths.get(filePath)), "UTF-8");
         //System.out.println(templateContent);
         validateTemplate(templateContent);
@@ -42,14 +41,14 @@ public class TemplateProcessor {
     }
 
     // validar contenido de template
-    private void validateTemplate(String content) throws TemplateExceptions.MultipleBracketsException {
+    private void validateTemplate(String content) throws TemplateExceptions {
         // encuentra identificadores con múltiples < >
         Pattern multipleBracketsPattern = Pattern.compile("<{2,}|>{2,}");
         Matcher multipleBracketsMatcher = multipleBracketsPattern.matcher(content);
 
         // si hay identificador con varios < >
         if (multipleBracketsMatcher.find()) {
-            throw new TemplateExceptions.MultipleBracketsException("El template contiene múltiples (< / >)");
+            throw new TemplateExceptions("El template contiene múltiples '<' '>'");
         }
     }
 
