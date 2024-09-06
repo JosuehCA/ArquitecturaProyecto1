@@ -1,4 +1,4 @@
-﻿Dear  <     destinatario    >,
+﻿Dear  <     destinatrio    >,
 
 This letter is regarding the advertisement you posted in the newspaper for the position
 of Fresher Electrical Engineer at VibeSoft Technologies Pvt. Ltd.
@@ -12,7 +12,7 @@ time and consideration. Looking forward to hearing from you.
 
 Regards,
 
-<remitente>
+<destinatrio>
 Senior Electrical Engineer, Trident Technologies and Co.
 
 

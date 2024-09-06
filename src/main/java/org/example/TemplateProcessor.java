@@ -72,4 +72,8 @@ public class TemplateProcessor {
 
         return processedContent;
     }
+
+    public ArrayList<String> getIdentifiers() {
+        return identifiers;
+    }
 }

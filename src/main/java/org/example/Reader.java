@@ -3,6 +3,8 @@ package org.example;
 import com.opencsv.CSVReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.example.CSVExceptions;
 import org.example.CSVExceptions;
 
@@ -64,7 +66,7 @@ public class Reader {
     }
 
     // validar que el CSV tiene encabezados y fila de datos
-    public static void validateCSV(String[][] csvData) throws CSVExceptions {
+    public static void validateCSV(String[][] csvData, ArrayList<String> identifiers) throws CSVExceptions {
 
         String[] headers = csvData[0];
         boolean hasDestinatario = false;
@@ -72,10 +74,10 @@ public class Reader {
 
         // verificar que existan los encabezados
         for (String header : headers) {
-            if (header.equalsIgnoreCase("destinatario")) {
+            if (header.equalsIgnoreCase(identifiers.get(0))) {
                 hasDestinatario = true;
             }
-            if (header.equalsIgnoreCase("remitente")) {
+            if (header.equalsIgnoreCase(identifiers.get(1))) {
                 hasRemitente = true;
             }
         }

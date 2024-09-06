@@ -19,14 +19,14 @@ public class Main {
             // leer CSV
             String[][] csvData = Reader.leerArchivo(csvPath);
 
+            // Detectar identificadores en el template
+            templateProcessor.detectIdentifiers();
+
             // verificar que el CSV tenga los encabezados y datos
-            validateCSV(csvData);
+            validateCSV(csvData, templateProcessor.getIdentifiers());
 
             // instancia de CreatePdf
             CreatePdf pdfCreator = new CreatePdf();
-
-            // Detectar identificadores en el template
-            templateProcessor.detectIdentifiers();
 
             // procesa cada fila del CSV y agrega una página al PDF
             for (int i = 1; i < csvData.length; i++) {  // se omiten encabezados
