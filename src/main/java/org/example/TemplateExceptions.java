@@ -1,9 +1,7 @@
 package org.example;
 
-public class TemplateExceptions {
-    public static class MultipleBracketsException extends Exception {
-        public MultipleBracketsException(String message) {
+public class TemplateExceptions extends Exception{
+        public TemplateExceptions(String message) {
             super(message);
         }
     }
-}
